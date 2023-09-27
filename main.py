@@ -9,6 +9,11 @@ while !connected:
     basic.pause(1000)
 
 def on_received_string(receivedString):
+    if !connected:
+        if bec.decryptString(receivedString, private_key):
+            connected = True
+        radio.send_string(bec.encryptString(receivedString, receivedString))
+        return
     serial.write_line(receivedString)
 radio.on_received_string(on_received_string)
 
